@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
+ * Represents T-Mobile Form.
+ * Can send form filled with data in parameters.
  * 
  * @author Petra
  */
@@ -20,7 +22,8 @@ public class TMobileForm {
     private String email;
     
     /**
-    * Constructor 
+    * Constructor - creates and validates data for question.
+    * 
     * @param url        url of the form
     * @param subject    subject of question
     * @param content    actual question
@@ -64,48 +67,50 @@ public class TMobileForm {
     }
     public String getPhonenum() {return this.phonenum;}
     public void setEmail(String email) {
-        this.email = email;
+        if(valEmail(email))
+            this.email = email;
+        else
+            throw new IllegalArgumentException("Email in incorrect format.");
     }
     public String getEmail() {return this.email;}
     
     /**
-     * Returns 
+     * Fills and sends form.
+     * It also clicks on checkbox and loads picture. 
      * 
-     * @param driver
-     * @return 
+     * @param driver    webdriver
+     * @see             pic.jpg
      */
-    public String fillForm(WebDriver driver) {
-                driver.navigate().to(url);
-        
-        //jsem tam - vyplnuju form
+    public void fillForm(WebDriver driver) {
+        driver.navigate().to(url);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
         driver.findElement(By.name("phoneNumber")).sendKeys(phonenum);
         driver.findElement(By.name("email")).sendKeys(email);
         
-        //checkbox
+        // checkbox
         WebElement fe4 = driver.findElement(By.xpath("//*[@type='checkbox']"));
         JavascriptExecutor Executor = ((JavascriptExecutor)driver);
         Executor.executeScript("arguments[0].click();", fe4);
         
-        //nahraju obrazek
+        // loading picture
         WebElement fe5 = driver.findElement(By.xpath("//input[@type='file']"));
         File file = new File("pic.jpg");
         fe5.sendKeys(file.getAbsolutePath());
         
-        // odeslani a kontrola
+        // sending and checking
         driver.findElement(By.name("submit")).submit();
         try {
             driver.findElement(By.xpath("//div[@class='portlet-msg-success']"));
         } catch (NoSuchElementException e) {
-            return e.getMessage();
+            throw new NoSuchElementException(e.getMessage());
         }
-        
-        return "YES";
     }
     
     /**
      * Checking if phone number is in correct format. 
+     * It must be 6-12 numbers long.
+     * 
      * @param phonenum  phone number
      * @return          true if number is valid
      */
@@ -117,6 +122,8 @@ public class TMobileForm {
     
     /**
      * Checking if email address is in correct format.
+     * It must be something@something.something
+     * 
      * @param email email address
      * @return      true if email is valid
      */

@@ -9,7 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * 
+ * Represents Google seach. 
+ * Searches expression in google, go to first result and navigate to form.
  * 
  * @author Petra
  */
@@ -31,7 +32,8 @@ public class GoogleSearch {
     public String getUrl() {return this.url;}
     
     /**
-     * Google searches expression and navigate to form.
+     * Google-searches expression and navigate to form.
+     * Contains shortcut through drop down menu.
      * 
      * @param driver    webdriver
      * @return          string with url of form
@@ -43,20 +45,20 @@ public class GoogleSearch {
         q.sendKeys(url);
         q.submit();
         
-        // cekam nez najde vysledky
+        // waiting for results
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
         
-        //prvni odkaz v seznamu - predpokladam ze homepage
+        // first link - homepage
         WebElement fe = driver.findElement(By.xpath("//h3[@class='r']/a"));
         String url2 = fe.getAttribute("href");
         driver.navigate().to(url2);
         
         WebElement fe2 = driver.findElement(By.linkText("Podpora"));
-        //zkraceni 4
-        Actions action = new Actions(driver); // odkryvam
+        // shortcut
+        Actions action = new Actions(driver); // drop down menu
         action.moveToElement(fe2).build().perform();
         
-        // vyberu spravny odkaz
+        // choosing the right link
         List<WebElement> fe3 = driver.findElements(By.xpath("//li[@class='col-md-4']/a"));
         driver.navigate().to(fe3.get(3).getAttribute("href"));
         
