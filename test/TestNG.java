@@ -23,15 +23,13 @@ public class TestNG {
         
         GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
-        TMobileForm f = new TMobileForm(url, null, null, null, null);
+        TMobileForm f = new TMobileForm(url, "Pokus1", "", "111333777", "x@x.x");
         
-        f.setSubject("Pokus");
         f.setContent("Kolik? Co? Proc? Jak?");
-        f.setPhonenum("111333777");
-        f.setEmail("x@x.com");
+        f.setPhonenum("777333111");
         
-        act = f.fillForm(driver, url);
-        assertEquals("FAIL", act, "YES");
+        act = f.fillForm(driver);
+        assertEquals(act, "YES");
     }
     
     @Test(priority = 1)
@@ -40,9 +38,9 @@ public class TestNG {
       
         GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
-        TMobileForm f = new TMobileForm(url,"Pokus2","Kolik?","666999","x@x.com");
-        act = f.fillForm(driver, url);
-        assertEquals("FAIL", act, "YES");
+        TMobileForm f = new TMobileForm(url,"Pokus2","Kolik?","666999","abc12@123.commm");
+        act = f.fillForm(driver);
+        assertEquals(act, "YES");
     }
     
     @AfterTest

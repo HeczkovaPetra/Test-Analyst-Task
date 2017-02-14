@@ -8,13 +8,34 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * 
+ * 
+ * @author Petra
+ */
 public class GoogleSearch {
     private String url;
     
+    /**
+     * Constructor
+     * @param baseUrl   string that will be searched by Google
+     */
     public GoogleSearch(String baseUrl) {
+        if(baseUrl == null) {
+            throw new IllegalArgumentException("baseUrl can't be null.");
+        }
         this.url = baseUrl;
     }
     
+    public void setUrl(String baseUrl) {this.url = baseUrl;}
+    public String getUrl() {return this.url;}
+    
+    /**
+     * Google searches expression and navigate to form.
+     * 
+     * @param driver    webdriver
+     * @return          string with url of form
+     */
     public String gsearch(WebDriver driver) {
         
         driver.get("http://www.google.com/");
