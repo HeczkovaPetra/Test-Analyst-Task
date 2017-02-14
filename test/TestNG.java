@@ -2,6 +2,7 @@ import def.GoogleSearch;
 import def.TMobileForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -28,11 +29,12 @@ public class TestNG {
         
         GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
-        TMobileForm f = new TMobileForm(url, "Pokus1", "", "111333777", "x@x.x");
+        TMobileForm f = new TMobileForm(url, "Predmet1", "", "111333777", "xcf@ssx.com");
         
         f.setContent("Kolik? Co? Proc? Jak?");
-        f.setPhonenum("777333111");
-        f.fillForm(driver);
+        f.setPhonenum("666555444");
+        int i = f.fillForm(driver);
+        assertEquals(i, 0, "Form was not filled correctly.");
     }
     
     @Test
@@ -41,12 +43,13 @@ public class TestNG {
       
         GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
-        TMobileForm f = new TMobileForm(url,"Pokus2","Kolik?","666999","abc12@123.commm");
-        f.fillForm(driver);
+        TMobileForm f = new TMobileForm(url,"Predmet2","Kolik?","77778888","a45d@1sda.commm");
+        int i = f.fillForm(driver);
+        assertEquals(i, 0, "Form was not filled correctly.");
     }
     
     @AfterTest
     public void testF() {
-      //  driver.close();
+        //driver.close();
    }
 }

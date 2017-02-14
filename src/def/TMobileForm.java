@@ -79,9 +79,10 @@ public class TMobileForm {
      * It also clicks on checkbox and loads picture. 
      * 
      * @param driver    webdriver
+     * @return          zero if everything ok
      * @see             pic.jpg
      */
-    public void fillForm(WebDriver driver) {
+    public int fillForm(WebDriver driver) {
         driver.navigate().to(url);
         driver.findElement(By.name("subject")).sendKeys(subject);
         driver.findElement(By.name("content")).sendKeys(content);
@@ -99,12 +100,13 @@ public class TMobileForm {
         fe5.sendKeys(file.getAbsolutePath());
         
         // sending and checking
-        driver.findElement(By.name("submit")).submit();
+        driver.findElement(By.name("submit")).click();
         try {
             driver.findElement(By.xpath("//div[@class='portlet-msg-success']"));
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException(e.getMessage());
         }
+        return 0;
     }
     
     /**
