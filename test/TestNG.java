@@ -1,4 +1,5 @@
-import def.AnalystTask;
+import def.GoogleSearch;
+import def.TMobileForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
@@ -7,38 +8,41 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 public class TestNG {
-    public String s;
+    public String tmob;
     public WebDriver driver;
     
     @BeforeTest
     public void test0() {
-        s = "t-mobile";
+        tmob = "t-mobile";
         driver = new ChromeDriver();
     }
     
     @Test(priority = 0)
     public void test1() {
-        String str, url;
-        AnalystTask t = new AnalystTask(s);
+        String act, url;
+        
+        GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
+        TMobileForm f = new TMobileForm(url, null, null, null, null);
         
-        t.setS("Pokus");
-        t.setC("Kolik? Co? Proc? Jak?");
-        t.setP("111333777");
-        t.setE("x@x.com");
+        f.setSubject("Pokus");
+        f.setContent("Kolik? Co? Proc? Jak?");
+        f.setPhonenum("111333777");
+        f.setEmail("x@x.com");
         
-        str = t.fillForm(driver, url);
-        assertEquals("YES", str);
+        act = f.fillForm(driver, url);
+        assertEquals("FAIL", act, "YES");
     }
     
     @Test(priority = 1)
     public void test2() {
-        String str, url;
-        AnalystTask t = new AnalystTask(s,"Pokus2","Kolik?","666999","x@x.com");
+        String act, url;
+      
+        GoogleSearch t = new GoogleSearch(tmob);
         url = t.gsearch(driver);
-        
-        str = t.fillForm(driver, url);
-        assertEquals("YES", str);
+        TMobileForm f = new TMobileForm(url,"Pokus2","Kolik?","666999","x@x.com");
+        act = f.fillForm(driver, url);
+        assertEquals("FAIL", act, "YES");
     }
     
     @AfterTest
