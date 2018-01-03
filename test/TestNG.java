@@ -50,6 +50,6 @@ public class TestNG {
     
     @AfterTest
     public void testF() {
-        //driver.close();
+        driver.close();
    }
 }
